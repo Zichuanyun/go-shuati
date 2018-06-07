@@ -3,7 +3,7 @@
 ## Init
 1. Clone.
 2. Create your folder using your preferred name. For example "zichuanyu", "zain", "whatever".
-3. Add this name to the [doc](https://docs.google.com/spreadsheets/d/1i4yPW0AlH2MUaUSVYs0I_ZsPsJxwWuA4TLwROc0PKjw/edit?usp=sharing).
+3. Add this name to the [sheet](https://docs.google.com/spreadsheets/d/1i4yPW0AlH2MUaUSVYs0I_ZsPsJxwWuA4TLwROc0PKjw/edit?usp=sharing).
 4. Add something to your folder
   - If you want to push code to repo:
     1. Finish [Two Sum](https://leetcode.com/problems/two-sum/description/) with any form you like
