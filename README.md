@@ -11,9 +11,11 @@
     3. Count 1 for yourself in the doc.
   - If you want to use screen shot:
     1. Leave a note in your folder telling us where we can find your screen shots (for example google doc/drive link).
-    2. DON'T push the pictures directly to the repo! PLEASE!
+    2. Finish Two Sum. Upload the screen shot to your own place(not this repo). Count 1 for yourself in the doc.
+    3. DON'T push the pictures directly to the repo! PLEASE!
   - If you don't want to do the two things above:
     1. Leave a note in your folder containing your profile link. Could be LeetCode profile or github profile (or other).
+    2. Finish Two Sum. Count 1 for yourself in the doc.
 5. Cheers! You are now with us!
 6. Begin to follow everyday's problems.
 7. Finish the past problems if you like, but sadly you can only count 1 for each problem.
