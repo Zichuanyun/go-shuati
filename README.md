@@ -1,20 +1,26 @@
 # go-shuati 
 
 ## Init
-- Clone.
-- Create your folder using your preferred name. For example "zichuanyu", "zain", "whatever".
-- Add this name to the [doc](https://docs.google.com/spreadsheets/d/1i4yPW0AlH2MUaUSVYs0I_ZsPsJxwWuA4TLwROc0PKjw/edit?usp=sharing).
-- Finish [Two Sum](https://leetcode.com/problems/two-sum/description/)
-  - Finish the problem with any form you like.
-  - Put a file containing your solution in your folder. Push.
-  - Count 1 for yourself in the doc.
-  - Cheers! You are now with us!
-- Begin to follow everyday's problems.
-- Finish the past problems if you like, but sadly you can only count 1 for each problem.
+1. Clone.
+2. Create your folder using your preferred name. For example "zichuanyu", "zain", "whatever".
+3. Add this name to the [doc](https://docs.google.com/spreadsheets/d/1i4yPW0AlH2MUaUSVYs0I_ZsPsJxwWuA4TLwROc0PKjw/edit?usp=sharing).
+4. Add something to your folder
+  - If you want to push code to repo:
+    1. Finish [Two Sum](https://leetcode.com/problems/two-sum/description/) with any form you like
+    2. Put a file containing your solution in your folder. Push.
+    3. Count 1 for yourself in the doc.
+  - If you want to use screen shot:
+    1. Leave a note in your folder telling us where we can find your screen shots (for example google doc/drive link).
+    2. DON'T push the pictures directly to the repo! PLEASE!
+  - If you don't want to do the two things above:
+    1. Leave a note in your folder containing your profile link. Could be LeetCode profile or github profile (or other).
+5. Cheers! You are now with us!
+6. Begin to follow everyday's problems.
+7. Finish the past problems if you like, but sadly you can only count 1 for each problem.
 
 ## Rule
-- Count 2 for each problem you finish (push your code to this repo) before PST 23:59 count at the release date.
-- Count 1 for each problem you finish after PST 23:59 count at the release date.
+- Count 1 for each problem you finish (push your code to this repo) before PST 23:59 count at the release date.
+- Count 0.5 for each problem you finish after PST 23:59 count at the release date.
 
 ## Notice
 - We will be Googlers, so be Googley. Count honestly.
