@@ -6,7 +6,7 @@
 3. Add this name to the [sheet](https://docs.google.com/spreadsheets/d/1i4yPW0AlH2MUaUSVYs0I_ZsPsJxwWuA4TLwROc0PKjw/edit?usp=sharing).
 4. Add something to your folder
   - If you want to push code to repo:
-    1. Finish [Two Sum](https://leetcode.com/problems/two-sum/description/) with any form you like
+    1. Finish [Two Sum](go/shuati) with any form you like
     2. Put a file containing your solution in your folder. Push.
     3. Count 1 for yourself in the doc.
   - If you want to use screen shot:
