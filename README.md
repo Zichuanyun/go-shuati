@@ -18,7 +18,7 @@
     2. Finish Two Sum. Count 1 for yourself in the doc.
 5. Cheers! You are now with us!
 6. Begin to follow everyday's problems.
-7. Finish the past problems if you like, but sadly you can only count 1 for each problem.
+7. Finish the past problems if you like, but sadly you can only count 0.5 for each problem.
 
 ## Rule
 - Count 1 for each problem you finish (push your code to this repo) before PST 23:59 count at the release date.
