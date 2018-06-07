@@ -19,7 +19,7 @@
 ## Notice
 - We will be Googlers, so be Googley. Count honestly.
 - Don't touch others' content in the repo or doc.
-- Contact the repo owner if you have any suggestions. Please don't change this README directly.
+- Contact the repo owner if you have any suggestions. 
 - The rule may change, but won't change much.
 - The owner of this repo may change. 
 - **坚持，就是胜利！**
