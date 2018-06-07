@@ -17,6 +17,9 @@
 - Count 1 for each problem you finish after PST 23:59 count at the release date.
 
 ## Notice
-- We will be Googlers, so be Googley. Count honestly. Don't touch others' content in the repo or doc.
+- We will be Googlers, so be Googley. Count honestly.
+- Don't touch others' content in the repo or doc.
+- Contact the repo owner if you have any suggestions. Please don't change this README directly.
 - The rule may change, but won't change much.
+- The owner of this repo may change. 
 - **坚持，就是胜利！**
