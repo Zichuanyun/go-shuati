@@ -21,8 +21,8 @@
 7. Finish the past problems if you like, but sadly you can only count 0.5 for each problem.
 
 ## Rule
-- Count 1 for each problem you finish (push your code to this repo) before PST 23:59 count at the release date.
-- Count 0.5 for each problem you finish after PST 23:59 count at the release date.
+- Count 1 for each problem you finish (push your code to this repo) before PST 23:59 at the release date.
+- Count 0.5 for each problem you finish after PST 23:59 at the release date.
 
 ## Notice
 - We will be Googlers, so be Googley. Count honestly.
