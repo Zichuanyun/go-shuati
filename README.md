@@ -3,7 +3,7 @@
 ## Init
 1. Clone.
 2. Create your folder using your preferred name. For example "zichuanyu", "zain", "whatever".
-3. Add this name to the [sheet](https://docs.google.com/spreadsheets/d/1i4yPW0AlH2MUaUSVYs0I_ZsPsJxwWuA4TLwROc0PKjw/edit?usp=sharing).
+3. Add this name to the [sheet](https://docs.google.com/spreadsheets/d/1ine4GyjVKwBXm9_BuFG22zq2kB2-JzuLWNPt2AYgId0/edit?usp=sharing).
 4. Add something to your folder
   - If you want to push code to repo:
     1. Finish [Two Sum](go/shuati) with any form you like
