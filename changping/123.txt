@@ -1,0 +1,16 @@
+#include<limits>
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int hold1 = std::numeric_limits<int>::min(), hold2 = hold1;
+        int release1 = 0, release2 = 0;
+        for(int i = 0; i < prices.size(); i++){  
+	        int value = prices[i];                            
+            release2 = max(release2, hold2 + value);     // The maximum if we've just sold 2nd stock so far.
+            hold2    = max(hold2,    release1-value);  // The maximum if we've just buy  2nd stock so far.
+            release1 = max(release1, hold1 + value);     // The maximum if we've just sold 1nd stock so far.
+            hold1    = max(hold1,    -value);          // The maximum if we've just buy  1st stock so far. 
+        }
+        return release2; ///Since release1 is initiated as 0, so release2 will always higher than release1.
+    }
+};
