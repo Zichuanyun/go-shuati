@@ -3,7 +3,7 @@
 ## Init
 1. Clone.
 2. Create your folder using your preferred name. For example "zichuanyu", "zain", "whatever".
-3. Add this name to the [sheet](https://docs.google.com/spreadsheets/d/1i4yPW0AlH2MUaUSVYs0I_ZsPsJxwWuA4TLwROc0PKjw/edit?usp=sharing).
+3. Add this name to the [sheet](https://docs.google.com/spreadsheets/d/1ine4GyjVKwBXm9_BuFG22zq2kB2-JzuLWNPt2AYgId0/edit?usp=sharing).
 4. Add something to your folder
   - If you want to push code to repo:
     1. Finish [Two Sum](go/shuati) with any form you like
@@ -21,8 +21,8 @@
 7. Finish the past problems if you like, but sadly you can only count 0.5 for each problem.
 
 ## Rule
-- Count 1 for each problem you finish (push your code to this repo) before PST 23:59 count at the release date.
-- Count 0.5 for each problem you finish after PST 23:59 count at the release date.
+- Count 1 for each problem you finish (push your code to this repo) before PST 23:59 at the release date.
+- Count 0.5 for each problem you finish after PST 23:59 at the release date.
 
 ## Notice
 - We will be Googlers, so be Googley. Count honestly.
