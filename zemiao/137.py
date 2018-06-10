@@ -5,7 +5,7 @@ class Solution(object):
         :rtype: int
         """
         ans = 0
-        for i in xrange(0,32):
+        for i in range(32):
             
             # After this step, bit i of ans will be count(where bit i is 1) %3
             count = 0
@@ -16,8 +16,8 @@ class Solution(object):
             
         return self.convert(ans)
     
-    '''converts 64bit ans into 32bit,
-    x >= 2**31 means first bit is 1, a neg number.
+    '''converts >32bit signed ans into 32bit signed,
+    x >= 2**31 means the 1st 32-bit is 1, a neg number.
     neg number is stored as flip(pos)+1
     '''
     def convert(self,x):

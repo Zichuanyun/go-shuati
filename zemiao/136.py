@@ -4,12 +4,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        appear = {}
+        ans = 0
         for i in nums:
-            if i in appear:
-                del appear[i]
-            else:
-                appear[i] = True
-                
-        for k in appear:
-            return k
+            ans ^= i
+            
+        return ans
