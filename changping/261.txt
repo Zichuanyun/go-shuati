@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool validTree(int n, vector<pair<int, int>>& edges) {
+        vector<int> store(n, 0);
+        for(int i = 0; i < n; i++) {
+            store[i] = i;
+        }
+        for(int i = 0; i < edges.size(); i++) {
+            int f = edges[i].first;
+            int s = edges[i].second;
+            while(store[f] != f) f = store[f];
+            while(store[s] != s) s = store[s];
+            if(f == s) return false;
+            store[s] = f;
+        }
+        return edges.size() == n - 1;
+    }
+};
