@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxCoins(vector<int>& nums) {
+        int N = nums.size();
+        nums.insert(nums.begin(), 1);
+        nums.insert(nums.end(), 1);
+        vector<vector<int>> store(N+2, vector<int>(N+2, 0));
+        for (int len = 1; len <= N; len++) {
+            for (int begin = 1; begin <= N - len + 1; begin++) { 
+                int end = begin + len -1;
+                int best = 0;
+                for (int cur = begin; cur <= end; cur ++) {
+                    int curval = store[begin][cur - 1] + store[cur+1][end];
+                    curval += nums[begin-1] * nums[cur] * nums[end + 1];
+                    if (curval > best) {
+                        best = curval;
+                    }
+                }
+                store[begin][end] = best;
+                
+            }
+        }
+        return store[1][N];
+    }
+};
