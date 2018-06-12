@@ -33,3 +33,46 @@ class Solution {
         return count == numCourses;
         }
 }
+
+
+DFS
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        //dfs
+        
+        boolean[] visit = new boolean[numCourses];
+        
+        ArrayList[] graph = new ArrayList[numCourses];
+        
+        for(int i = 0; i < numCourses; i++){
+            graph[i] = new ArrayList();
+        }
+        
+        for(int i = 0; i < prerequisites.length; i++){
+            int precondition = prerequisites[i][1];
+            int tohave = prerequisites[i][0];
+            
+            graph[precondition].add(tohave);
+        }
+        
+        for(int i = 0; i < numCourses; i++){
+            if(!taken(i, graph, visit)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean taken(int course, ArrayList[] graph, boolean[] visit){
+        if(visit[course]) return false;
+        else  visit[course] = true;
+        for(int i = 0; i < graph[course].size(); i++){
+            int next = (int)graph[course].get(i);
+            if(!taken(next, graph, visit)){
+                return false;
+            }
+        }
+        visit[course] = false;
+        return true;
+    }
+}
