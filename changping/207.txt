@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        vector<unordered_set<int>> matrix(numCourses);
+        
+        for(int i = 0; i < prerequisites.size(); i++) {
+            matrix[prerequisites[i].first].insert(prerequisites[i].second);
+        }
+        vector<int> d(numCourses, 0);
+        
+        for (int i = 0; i < numCourses; i++) {
+            for(auto it = matrix[i].begin(); it != matrix[i].end(); it ++) {
+                d[*it] ++;
+            }
+        }
+        for (int j = 0; j < numCourses; j++) {
+            int i = 0;
+            for (i = 0; i < numCourses && d[i] != 0; i++);
+            
+            if(i == numCourses)
+                return false;
+            
+            d[i] = -1;
+            for(auto it = matrix[i].begin(); it != matrix[i].end(); it++) {
+                d[*it] --;
+            }
+        }
+        return true;
+    }
+
+};
+
