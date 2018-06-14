@@ -18,7 +18,7 @@ class Solution(object):
                 seen[Alice] = True
                 newCircle = True
                 for j in range(n):
-                    if M[Alice][j]:
+                    if not j in seen and M[Alice][j]:
                         stack += [j]
         
             if newCircle:
