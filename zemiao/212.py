@@ -9,10 +9,9 @@ class Solution(object):
         if m == 0:
             return []
         n = len(board[0])
-        seen = [[0]*n for i in range(m)]
         
-        # Construct the trie tree.
-        s = set()
+        seen = [[0]*n for i in range(m)]
+        ans = set()
         def dfs(a,b,temp,trie):
             if a>=m or a<0 or b>=n or b<0 or seen[a][b]:
                 return
@@ -22,7 +21,7 @@ class Solution(object):
                 return
             temp += board[a][b]
             if next.isLeaf:
-                s.add(temp)
+                ans.add(temp)
             seen[a][b] = 1
             dfs(a+1,b,temp,next)
             dfs(a-1,b,temp,next)
@@ -30,18 +29,16 @@ class Solution(object):
             dfs(a,b-1,temp,next)
             seen[a][b] = 0
 
+        # Construct the trie tree.
         root = Trie()   
         for word in words:
             root.insert(word)
                 
-        ans = []
         for i in range(m):
             for j in range(n):
-                dfs(i,j,"",root);
+                dfs(i,j,"",root)
 
-        for word in s:
-            ans.append(word)
-        return ans
+        return list(ans)
             
 class Trie(object):
     def __init__(self):
