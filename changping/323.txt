@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int countComponents(int n, vector<pair<int, int>>& edges) {
+        vector<int> roots(n);
+        for(int i = 0; i < n; i++) roots[i] = i;
+        
+        for (auto e:edges) {
+            int root1 = find(roots, e.first);
+            int root2 = find(roots, e.second);
+            if(root1 != root2) {
+                roots[root1] = root2;
+                n--;
+            }
+        }
+        return n;
+    }
+    
+    int find(vector<int> roots, int id) {
+        while(roots[id] != id) {
+            roots[id] = roots[roots[id]];
+            id = roots[id];
+        }
+        return id;
+    }
+};
