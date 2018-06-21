@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        mypermute(nums, res, 0);
+        return res;
+    }
+    void mypermute(vector<int>& nums, vector<vector<int>> &res, int begin) {
+        if(begin >= nums.size()-1) {
+            res.push_back(nums);
+            return;
+        }
+        unordered_map<int, bool> m;
+        for(int i = begin; i < nums.size(); i++) {
+            if (m[nums[i]])
+                continue;
+            m[nums[i]] = true;
+            swap(nums[i], nums[begin]);
+            mypermute(nums, res, begin + 1);
+            swap(nums[begin], nums[i]);
+        }
+    }
+};
+

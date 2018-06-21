@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void wallsAndGates(vector<vector<int>>& rooms) {
+        if(rooms.size() == 0 || rooms[0].size() == 0) {
+            return;
+        }
+        queue<pair<int, int>> qu;
+        for (int i = 0; i < rooms.size(); i++) {
+            for (int j = 0; j < rooms[0].size(); j++) {
+                if(rooms[i][j] == 0) {
+                    qu.push(make_pair(i, j));
+                }
+            }
+        }
+        int INF =  2147483647;
+        while(!qu.empty()) {
+            pair<int, int> cur = qu.back();
+            qu.pop();
+            int row = cur.first, col = cur.second;
+            if(row > 0 && rooms[row - 1][col] == INF) {
+                rooms[row-1][col] = rooms[row][col] + 1;
+                qu.push(make_pair(row-1, col));
+            }
+            if(row < rooms.size() - 1 && rooms[row + 1][col] == INF) {
+                rooms[row + 1][col] = rooms[row][col] + 1;
+                qu.push(make_pair(row + 1, col));
+            }
+            if(col > 0 && rooms[row][col - 1] == INF) {
+                rooms[row][col - 1] = rooms[row][col] + 1;
+                qu.push(make_pair(row, col - 1));
+            }
+            if(col < rooms[0].size() - 1 && rooms[row][col + 1] == INF) {
+                rooms[row][col + 1] = rooms[row][col] + 1;
+                qu.push(make_pair(row, col + 1));
+            }
+        }
+    }
+};
