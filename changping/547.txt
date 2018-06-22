@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        if ( M.size() == 0) {
+            return 0;
+        }
+        vector<bool> unvisited(M.size(), true);
+        int res = 0;
+        for (int i = 0; i < M.size(); i++) {
+            if(unvisited[i]) {
+                //unvisited[i] = false;
+                res++;
+                dfs(i, unvisited, M);
+            }
+        }
+        return res;
+    }
+    
+    void dfs(int i, vector<bool>& unvisited, vector<vector<int>> M) {
+        unvisited[i] = false;
+        
+        for (int j = 0; j < unvisited.size(); j++) {
+            if(i != j && M[i][j] && unvisited[j]) {
+                // unvisited[j] = false;
+                dfs(j, unvisited, M);
+            }
+        }
+    }
+};

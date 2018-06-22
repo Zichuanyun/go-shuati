@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
+        
+        root = vector<int>(m*n, -1);
+        vector<int> res;
+        int idx = 0;
+        int island = 0;
+        vector<pair<int, int>> dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        for (auto pos : positions) {
+            int x = pos.first, y = pos.second, idx = x * n + y;
+            root[idx] = idx;
+            island ++;
+            for(auto dir : dirs) {
+                int new_x = x + dir.first, new_y = y + dir.second, id_new = new_x * n + new_y;
+                if(new_x >= 0 && new_x < m && new_y >= 0 && new_y < n && root[id_new] != -1) {
+                    int root_new = findRoot(id_new);
+                    int root_old = findRoot(idx);
+                    if (root_new != root_old) {
+                        root[root_old] = root_new;
+                        island--;
+                    }
+                }
+            }
+            res.push_back(island);
+            
+        }
+        return res;
+        
+    }
+private:
+    vector<int> root;
+    int findRoot(int input) {
+        while(root[input] != input) {
+          root[input] = root[root[input]];  
+          input = root[input];
+        } 
+        return input;
+    }
+};
