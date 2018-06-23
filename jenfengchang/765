@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minSwapsCouples(vector<int>& row) {
+        int n = row.size(), circle = 0;
+        vector<int> index(n);
+        vector<bool> visited(n>>1, false);
+
+        for (int i = 0; i < n; ++i)
+            index[row[i]] = i;
+        
+        // number ^ 1 will give you the answer to the seat number next to a seat,
+        // or a person number who is girl/boy friend of a person
+        auto pair = [](int number) { return number ^ 1; };
+        
+        function<void(int,int)> visit;
+        visit = [&] (int pos, int target) {
+            visited[pos/2] = true;
+            if (pair(row[pair(pos)]) != target) visit(index[pair(row[pair(pos)])], target);
+        };
+        
+        for (int i = 0; i < n>>1; ++i) {
+            if (visited[i]) continue;
+            ++circle;
+            visit(i<<1, row[i<<1]);
+        }
+        return n/2 - circle;
+    }
+};
