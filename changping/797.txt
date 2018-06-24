@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>>& graph, vector<vector<int>>& result, vector<int> path, int src, int dst)     {
+        path.push_back(src);
+        if(src == dst) {
+            result.push_back(path);
+            return;
+        }
+        for(auto it: graph[src]) {
+            dfs(graph, result, path, it, dst);
+        }
+    }
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        vector<vector<int>> res;
+        vector<int> path;
+        if(graph.size() == 0) {
+            return res;
+        }
+        dfs(graph, res, path, 0, graph.size() - 1 );
+        return res;
+    }
+
+};
