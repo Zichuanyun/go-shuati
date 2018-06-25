@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> colors(n, -1);
+        
+        for(int i = 0; i < n; i++) {
+            if(colors[i] == -1 && !validColor(graph, colors, 0, i)) {
+                return false;
+            }
+            
+        }
+        return true;
+    }
+    
+    bool validColor(vector<vector<int>>& graph, vector<int> &colors, int color, int node) {
+        if(colors[node] != -1) {
+            return colors[node] == color;
+        }
+        colors[node] = color;
+        for(auto next: graph[node]) {
+            if(!validColor(graph, colors, 1 - color, next)) {
+                return false;
+            }
+        }
+        return true;
+    }
+};

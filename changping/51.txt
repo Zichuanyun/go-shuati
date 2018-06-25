@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> res;
+        vector<std::string> nQueens(n, string(n, '.'));
+        vector<int> flag_col(n, 1), flag_45(2 * n - 1, 1), flag_135(2 * n - 1, 1);
+        solver(res, nQueens, flag_col, flag_45, flag_135, 0, n);
+        return res;
+    }
+    
+    void solver(vector<vector<string>> &res, vector<string> &nQueens, vector<int> col_flag, vector<int> dig45_flag, vector<int> dig135_flag, int row, int n) {
+        if(row == n) {
+            res.push_back(nQueens);
+            return;
+        }
+        for(int col = 0; col != n; col++) {
+            if(col_flag[col] && dig45_flag[row + col] && dig135_flag[n - 1 + col - row]) {
+                col_flag[col] = dig45_flag[row + col] = dig135_flag[n - 1 + col - row] = 0;
+                nQueens[row][col] = 'Q';
+                solver(res, nQueens, col_flag, dig45_flag, dig135_flag, row + 1, n);
+                nQueens[row][col] = '.';
+                col_flag[col] = dig45_flag[row + col] = dig135_flag[n - 1 + col - row] = 1;
+            }
+        }
+    }
+};
