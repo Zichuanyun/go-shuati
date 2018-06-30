@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        vector<int> left_height(height.size(),0);
+        vector<int> right_height(height.size(), 0);
+        int tmp = 0;
+        for (int i = 0; i < height.size(); i++) {
+            tmp = max(tmp, height[i]);
+            left_height[i] = tmp;
+        }
+        tmp = 0;
+        for (int i = height.size() - 1; i >= 0; i--) {
+            tmp = max(tmp, height[i]);
+            right_height[i] = tmp;
+        }
+        int res = 0;
+        for (int i = 0; i < height.size(); i++) {
+            res += min(left_height[i], right_height[i]) - height[i];
+        }
+        return res;
+    }
+};
