@@ -12,7 +12,7 @@ class Solution:
     def connect(self, root):
         if not root:
             return
-        childrenLayerStart = TreeLinkNode(0);
+        childrenLayerStart = TreeLinkNode(0)
         while root:
             childrenLayerStart.next = None
             tmp = childrenLayerStart
