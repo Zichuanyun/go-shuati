@@ -22,3 +22,52 @@ public:
         return tmp==NULL ? nullptr:tmp;
     }
 };
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+    unordered_map<ListNode *,int> map;
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(headA == NULL || headB == NULL) {
+            return NULL;
+        }
+        int cnt1 = 0, cnt2 = 0;
+        ListNode* tmp = headA;
+        while(tmp != NULL) {
+            cnt1++;
+            tmp = tmp->next;
+        }
+        tmp = headB;
+        while(tmp != NULL) {
+            cnt2++;
+            tmp = tmp->next;
+        }
+        tmp = headA;
+        ListNode* tmp2 = headB;
+        int diff = cnt1 - cnt2;
+        while (diff > 0) {
+            tmp = tmp->next;
+            diff--;
+        }
+        while (diff < 0) {
+            tmp2 = tmp2->next;
+            diff++;
+        }
+        while(tmp!=NULL) {
+            if(tmp == tmp2) {
+                return tmp;
+            }
+            tmp = tmp->next;
+            tmp2 = tmp2->next;
+        }
+        return NULL;
+    }
+};
