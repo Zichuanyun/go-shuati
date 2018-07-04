@@ -1,0 +1,37 @@
+    void reorderList(ListNode* head) {
+        if (head == NULL)
+            return;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (slow->next && fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        ListNode* tmp = slow->next;
+        slow->next = NULL;
+        ListNode* p = reverse(tmp);
+        ListNode* pNode = p;
+        ListNode* oriNode = head;
+        while (pNode != NULL) {
+            pNode = pNode->next;
+            p->next = oriNode->next;
+            oriNode->next = p;
+            oriNode = p->next;
+            p = pNode;
+        }
+    }
+    ListNode* reverse(ListNode* tmp) {
+        ListNode* new_head;
+        ListNode* prev = NULL;
+        ListNode* node = tmp;
+        while (node != NULL) {
+            ListNode* next = node->next;
+            if (next == NULL) {
+                new_head = node;
+            }
+            node->next = prev;
+            prev = node;
+            node = next;
+        }
+        return new_head;
+    }
