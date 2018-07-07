@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int calculate(string s) {
+        if(s == "") return 0;
+        
+        int result = 0;
+        int sign = 1;
+        int num = 0;
+        stack<int> stack;
+
+        stack.push(sign);
+
+        for (char c : s) {
+            if (isdigit(c)) {
+                num = num * 10 + (c - '0');
+            } else if (c == '+' || c == '-') {
+                result += sign * num;
+                sign = stack.top() * (c == '+' ? 1: -1); 
+                num = 0;
+            } else if (c == '(') {
+                stack.push(sign);
+            } else if (c == ')') {
+                stack.pop();
+            }
+        }
+
+        result += sign * num;
+        return result;
+    }
+};
