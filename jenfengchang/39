@@ -1,0 +1,20 @@
+class Solution {
+    vector<vector<int>> res;
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> tmp;
+        DFS(candidates, 0, tmp, target);
+        return res;
+    }
+    void DFS(vector<int>& candidates, int idx, vector<int> tmp, int target) {
+        if (target < 0)
+            return;
+        if (target == 0)
+            res.push_back(tmp);
+        for (int i = idx; i < candidates.size(); i++) {
+            tmp.push_back(candidates[i]);
+            DFS(candidates, i, tmp, target - candidates[i]);
+            tmp.pop_back();
+        }
+    }
+};
