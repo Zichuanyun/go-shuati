@@ -1,0 +1,109 @@
+class Solution {
+public:
+    int calculate(string s) {
+        int res = 0;
+        int num = 0;
+        int op = 1;
+        for (int i = 0; i < s.size(); i++) {
+            char c = s[i];
+            if (isdigit(c)) {
+                num = num * 10 + c - '0';
+            } else if (c == '-') {
+               // cout << num << endl;
+                res += op * num;
+                op = -1;
+                num = 0;
+            } else if (c == '+') { 
+               // cout << num << endl;
+                res += op * num;
+                op = 1;
+                num = 0;
+            } else if (c == '*') {
+                int num2 = 0;
+                i++;
+                for (int j = i; j < s.size(); j++, i++) {
+                    if (isdigit(s[j]))
+                        num2 = num2 * 10 + s[j] - '0';
+                    else if (s[j] == ' ')
+                        continue;
+                    else 
+                        break;
+                }
+                i--;
+                num = num2 * num;
+            } else if (c == '/') {
+                int num2 = 0;
+                i++;
+                for (int j = i; j < s.size(); j++, i++) {
+                    if (isdigit(s[j]))
+                        num2 = num2 * 10 + s[j] - '0';
+                    else if (s[j] == ' ')
+                        continue;
+                    else 
+                        break;
+                }
+                i--;
+                //cout << "!!!" << num << " " << num2 << endl;
+                num = num / num2;
+            }
+        }
+       // cout << num << endl;
+        res += op * num;
+        return res;
+    }
+};
+class Solution2 {
+public:
+    int calculate(string s) {
+        int res = 0;
+        if(s.size()==0) return 0;
+        vector<int> nums;
+        vector<char> oper;
+        int tmpAccNumber = 0;
+        for(int i = 0; i<s.size(); i++) {
+            if(s[i]==' ') continue;
+            if(isdigit(s[i])) {
+                tmpAccNumber = tmpAccNumber*10 + s[i] - '0';
+            }
+            else{
+                if(!oper.empty() && oper.back()=='*') {
+                    nums[nums.size()-1] = nums[nums.size()-1] * tmpAccNumber;
+                    oper.pop_back();
+                } else if(!oper.empty() && oper.back()=='/') {
+                    nums[nums.size()-1] = nums[nums.size()-1] / tmpAccNumber;
+                    oper.pop_back();
+                } else {
+                    nums.push_back(tmpAccNumber);
+                }
+                oper.push_back(s[i]);
+                tmpAccNumber = 0;
+            }
+        }                
+        if(!oper.empty() && oper.back()=='*') {
+            nums[nums.size()-1] = nums[nums.size()-1] * tmpAccNumber;
+            oper.pop_back();
+        } else if(!oper.empty() && oper.back()=='/') {
+            nums[nums.size()-1] = nums[nums.size()-1] / tmpAccNumber;
+            oper.pop_back();
+        } else {
+            nums.push_back(tmpAccNumber);
+        }
+        /*
+        for(auto i:nums) cout << i << " ";
+            cout << endl;
+        for(auto i:oper) cout << i << " ";
+            cout << endl; 
+        */
+        res = nums[0];
+        //cout << res << " ";
+        for(int i = 0; i<oper.size(); i++) {
+            if(oper[i]=='-') {
+                res-=nums[i+1];
+            } else if(oper[i]=='+') {
+                res+=nums[i+1];
+            } 
+           // cout << res << " ";
+        }
+        return res;
+    }
+};
