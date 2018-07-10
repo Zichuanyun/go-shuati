@@ -1,0 +1,32 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> findRightInterval(vector<Interval>& intervals) {
+        std::map<int, int> start2index;
+        std::vector<int> result(intervals.size());
+        for (int i = 0; i < intervals.size(); i++) {
+            start2index[intervals[i].start] = i;
+        }
+        for (int i = 0; i < intervals.size(); i++) {
+            if (start2index.find(intervals[i].end) != start2index.end()) {
+                result[i] = start2index[intervals[i].end];
+                continue;
+            } 
+            std::map<int, int>::iterator upper = start2index.upper_bound(intervals[i].end);
+            if (upper == start2index.end()) {
+                result[i] = -1;
+            } else {
+                result[i] = upper->second;
+            }
+        }
+        return result;
+    }
+};

@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        stack<int> non_descend;
+        non_descend.push(-1);
+        int max_water = 0;
+        for (int i = 0; i < height.size(); i++) {
+            int top = non_descend.top();
+            if (height[top] <= height[i]) {
+                non_descend.push(i);
+            } else {
+                int right = top;
+                while (top != -1 && height[top] > height[i]) {
+                    int area = height[top] * (right - top);
+                    max_water = max(area, max_water);
+                    non_descend.pop();
+                    top = non_descend.top();
+                }
+                non_descend.push(i);
+            }
+        }
+        int right = non_descend.top();
+        int top = right;
+        while (top != -1) {
+            int area = height[top] * (right - top);
+            max_water = max(area, max_water);
+            non_descend.pop();
+            top = non_descend.top();
+        }
+        return max_water;
+    }
+};

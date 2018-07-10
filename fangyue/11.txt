@@ -1,0 +1,23 @@
+bool compare(pair<int, int> a, pair<int, int> b) {
+    return a.second > b.second;
+}
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int max_area = 0, n = height.size();;
+        vector<pair<int, int>> nums(n);
+        for (int i = 0; i < n; i++) {
+            nums[i] = make_pair(i, height[i]);
+        }
+        std::sort(nums.begin(), nums.end(), compare);
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i+1; j < n; j++) {
+                int area = nums[j].second * abs(nums[i].first - nums[j].first);
+                max_area = max(area, max_area);
+                if (nums[j].second * n < max_area) break;
+            }
+            if (nums[i].second * n < max_area) break;
+        }
+        return max_area; 
+    }
+};
