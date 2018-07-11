@@ -1,0 +1,77 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return buildTree_(preorder, inorder, 0, preorder.size()-1, 0, inorder.size()-1);
+    }
+    TreeNode* buildTree_(vector<int>& preorder, vector<int>& inorder, int s1, int e1, int s2, int e2) {
+        if(s1 > e1 || s2 > e2) {
+            return NULL;
+        }
+        TreeNode* root = new TreeNode(preorder[s1]);
+        if(s1==e1) {
+            return root;
+        }
+        int mid = s2;
+        for(int i = s2; i <= e2; i++) {
+            if(inorder[i] == root->val) {
+                mid = i;
+                break;
+            }
+        }
+        root->left  = buildTree_(preorder, inorder, s1+1, s1+(mid-s2), s2, mid-1);
+        root->right = buildTree_(preorder, inorder, s1+(mid-s2)+1, e1, mid+1, e2);
+
+        return root;
+    }
+};
+
+class Solution2 {
+public:
+    
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) 
+    {
+        if(preorder.size() == 0) return NULL; // empty tree
+        int prePos = 0; 
+        TreeNode* root = partitionBuilder(preorder, inorder, prePos, 0, inorder.size()-1);
+        return root;
+    }
+    // build the tree by a pre-order traversal, decide to go left/right or both depending on whether
+    // there are elements in the inorder traversal-list that is partitioned by the current element.
+    TreeNode* partitionBuilder(vector<int>& pre, vector<int>& in, int& prePos, int inLower, int inUpper)
+    {
+        // just give the element its value as it would have in a normal preorder traversal.
+        int value = pre[prePos++]; // also increment the prePos for the next element.
+        TreeNode* newNode = new TreeNode(value);
+        
+        // what is the index of this element in the inorder traversal list?
+        int posInInorder = 0; // currentElement'sIndex in inorder traversal list.
+        while( in[posInInorder] != value)
+        {
+            posInInorder++;
+        }
+        // if there are elements to the left of the current element in the inorder traversal list 
+        // within the range of [inLower, currentElement'sIndex-1] 
+        // that means those elements are in the left subtree of this element. 
+        if(inLower < posInInorder)
+        {
+            newNode->left = partitionBuilder(pre, in, prePos, inLower, posInInorder-1);
+        }
+        // by the same logic, if there are elements to the right of the current element in the inorder
+        // traversal list within the range of [currentElement'sIndex+1, inUpper]
+        // those elements should be in its right subtree.
+        if(posInInorder < inUpper)
+        {
+            newNode->right = partitionBuilder(pre, in, prePos, posInInorder+1, inUpper);
+        }
+        return newNode;
+    }
+};
