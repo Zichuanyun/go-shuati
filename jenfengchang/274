@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        if (citations.size() == 0)
+            return 0;
+        sort(citations.begin(), citations.end());
+        if (citations[0] >= citations.size())
+            return citations.size();
+        for (int h = citations.size() - 1; h >= 0; h--) {
+            int H = citations.size() - h;
+            if (citations[H] >= h && citations[H - 1] <= h)
+                return h;
+        }
+        return 0;
+    }
+};
