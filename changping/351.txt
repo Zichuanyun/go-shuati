@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> countSmaller(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n, 0), indexes(n, 0);
+        for(int i = 0; i < n; ++i) indexes[i] = i;
+        countSmaller(res, indexes, nums, 0, n);
+        return res;
+    }
+    
+    void countSmaller(vector<int>& res, vector<int>& indexes, vector<int>& nums, int first, int last){
+        int len = last - first;
+        if(len <= 1) return;
+        
+        int mid = first + len / 2;
+        countSmaller(res, indexes, nums, first, mid);
+        countSmaller(res, indexes, nums, mid, last);
+        
+        vector<int> updated;
+        updated.reserve(len);        
+        int p1 = first, p2 = mid, cnt = 0;
+        while(p1 < mid || p2 < last){
+            if(p2 == last || (p1 < mid && nums[indexes[p1]] <= nums[indexes[p2]])){ 
+                updated.push_back(indexes[p1]);
+                res[indexes[p1]] += cnt;
+                ++p1;
+            }else{
+                updated.push_back(indexes[p2]);
+                ++cnt, ++p2;
+            }
+        }
+        move(updated.begin(), updated.end(), indexes.begin() + first);
+    }
+};
