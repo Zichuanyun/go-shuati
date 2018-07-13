@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> countSmaller(vector<int>& nums) {
+        int size = nums.size();
+        vector<int> left(size, -1), right(size, -1);
+        vector<int> le_sum(size, 0), result(size, 0), dup(size, 1);
+        for (int i = size - 2; i >= 0; i--) {
+            int idx = size - 1, smaller_count = 0;
+            while(idx > i) {
+                if (nums[i] > nums[idx]) {
+                    smaller_count += le_sum[idx] + dup[idx];
+                    if (right[idx] == -1) {
+                        right[idx] = i;
+                        result[i] = smaller_count;
+                    }
+                    idx = right[idx];
+                } else if (nums[i] < nums[idx]) {
+                    le_sum[idx]++;
+                    if (left[idx] == -1) {
+                        left[idx] = i;                        
+                        result[i] = smaller_count;
+                    }
+                    idx = left[idx];
+                } else {
+                    dup[idx]++;
+                    result[i] = smaller_count + le_sum[idx];
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+};
