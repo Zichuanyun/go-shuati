@@ -1,0 +1,24 @@
+// Forward declaration of isBadVersion API.
+bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        if (n == 0 || n == 1)
+            return n;
+        int s = 1, e = n;
+        while (s + 1 < e) {
+            int mid = s + (e - s) / 2;
+            //cout << s << " " << mid << " " << e << endl;
+            if (isBadVersion(mid)) {
+                e = mid;
+            } else {
+                s = mid;
+            }
+        }
+        if(isBadVersion(s))
+            return s;
+        else 
+            return e;
+    }
+};
