@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minCostII(vector<vector<int>>& costs) {
+        if (costs.size() == 0 || costs[0].size() == 0)
+            return 0;
+        vector<vector<int>> dp(costs.size() + 1, vector<int>(costs[0].size() + 1, 0));
+        int res = INT_MAX;
+        for (int i = 1; i <= costs.size(); ++i) {
+            for (int j = 1; j <= costs[0].size(); ++j) {
+                int min_cost = INT_MAX;
+                for (int k = 1; k <= costs[0].size(); ++k) {
+                    if (j != k) {
+                        min_cost = min(min_cost, dp[i - 1][k]);
+                    }
+                    dp[i][j] = costs[i - 1][j - 1] + (min_cost == INT_MAX ? 0 : min_cost);
+                }
+                if (i == costs.size()) {
+                    res = min(res, dp[i][j]);
+                }
+            }
+        }
+        return res;
+    }
+};

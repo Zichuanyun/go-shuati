@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        if(a.length()>b.length()) return addBinary(b, a);
+        int a_len = a.length() - 1;
+        int b_len = b.length() - 1;
+        string res = "";
+        int c = 0;
+        while (a_len >= 0 && b_len >= 0) {
+            int tmp = c + a[a_len--] - '0' + b[b_len--] - '0';
+            if (tmp == 0) {
+                c = 0;
+                res = "0" + res;
+            } else if (tmp == 1) {
+                c = 0;
+                res = "1" + res;
+            } else if (tmp == 2) {
+                c = 1;
+                res = "0" + res;
+            } else {
+                c = 1;
+                res = "1" + res;
+            }
+        }
+        if (b_len >= 0) {
+            for(; b_len >= 0; b_len--) {
+                int tmp = c + b[b_len] - '0';
+                if (tmp == 0) {
+                    c = 0;
+                    res = "0" + res;
+                } else if (tmp == 1) {
+                    c = 0;
+                    res = "1" + res;
+                } else if (tmp == 2) {
+                    c = 1;
+                    res = "0" + res;
+                }
+            }
+        }
+        if (c == 1) {
+            res = "1" + res;
+        }
+        return res;
+    }
+};
