@@ -1,0 +1,72 @@
+
+class WordDictionary {
+public:
+    struct Node {
+        bool isAlsoEnd;
+        vector<Node*> children;
+        Node(bool isAlsoEnd_){
+            isAlsoEnd = isAlsoEnd_;
+            children = vector<Node*>(26, NULL);
+        }
+    };
+    vector<Node*> roots;
+    /** Initialize your data structure here. */
+    WordDictionary() {
+        roots = vector<Node*>(26, NULL);
+    }
+    
+    /** Adds a word into the data structure. */
+    void addWord(string word) {
+        vector<Node*>::iterator iter = roots.begin();
+        for (int i = 0; i < word.length(); i++) {
+            iter += word[i] - 'a';
+            if (*iter == NULL) {
+                Node* new_node = new Node(i == word.length() - 1);
+                *iter = new_node;
+                // cout << "setting " << word[i] - 'a' << " to be " << *iter<< "\n";
+            }
+            iter = ((*iter)->children).begin();
+        }
+        // cout << "roots[1] :" << roots[1] << "\n";
+    }
+    
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    bool search(string word) {
+        return innerSearch(word, roots);
+    }
+private:
+    bool checkIdx(string word, vector<Node*> root, int idx, bool checkEnd) {
+        
+        if (root[idx] == NULL) {
+            return false;
+        }
+        // cout <<"Checking " << word << "\n";
+        if (checkEnd && root[idx]->isAlsoEnd) {
+            return true;
+        } else if (!checkEnd && innerSearch(word.substr(1), root[idx]->children)) {
+            return true;
+        }
+        return false;
+    }
+    
+    bool innerSearch(string word, vector<Node*> root) {
+        if (word.length() == 0) return false;
+        bool checkEnd = word.length() == 1;
+        if (word[0] == '.') {
+            for (int i = 0; i < root.size(); i++) {
+                if (checkIdx(word, root, i, checkEnd)) return true;
+            }
+            return false;
+        }
+        int idx = word[0] - 'a';
+        // cout << "Calling checkIdx(" << word << ", " << root[idx] << ", " << idx << ", " << checkEnd << ")\n";
+        return checkIdx(word, root, idx, checkEnd);
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord(word);
+ * bool param_2 = obj.search(word);
+ */

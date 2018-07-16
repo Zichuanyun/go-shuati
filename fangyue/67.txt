@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string result = "";
+        bool inc = false;
+        for (int i = a.length() - 1, j = b.length() - 1; i>=0 || j >= 0; i--, j--) {
+            char a_i = i >= 0? a[i] : '0';
+            char b_j = j >= 0? b[j] : '0';
+            if (a_i == b_j ^ inc) {
+                result = "0" + result;
+            } else {
+                result = "1" + result;
+            }
+            int ones = int(a_i == '1') + int(b_j == '1') + int(inc);
+            inc = (ones >= 2);
+        }
+        if (inc) {
+            result = "1" + result;
+        }
+        return result;
+    }
+};
