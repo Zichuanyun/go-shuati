@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
+        vector<vector<int>> out(numCourses);
+        vector<int> in_degree(numCourses, 0);
+        for (const auto& edge : prerequisites) {
+            out[edge.second].push_back(edge.first);
+            in_degree[edge.first]++;
+        }
+        queue<int> cur;
+        for (int i = 0; i < numCourses; ++i) {
+            if (in_degree[i] == 0) 
+                cur.push(i);
+        }
+
+        vector<int> res;
+        int cnt = 0;
+        while (!cur.empty()) {
+            int tmp = cur.front();
+            res.push_back(tmp);
+            cnt++;
+            cur.pop();
+            for (const auto& i : out[tmp]) {
+                in_degree[i]--;
+                if (in_degree[i] == 0)
+                    cur.push(i);
+            }
+        }
+        return cnt == numCourses ? res : vector<int>();
+    }
+};
