@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        res.push_back(vector<int>());
+        for (const int num : nums) {
+            vector<vector<int>> tmp;
+            for (auto i : res) {
+                i.push_back(num);
+                tmp.push_back(i);
+            }
+            for (auto i : tmp) {
+                res.push_back(i);
+            }
+        }
+        return res;
+    }
+};
