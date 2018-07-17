@@ -10,6 +10,7 @@ class Solution:
       for i in range(m):
         for j in range(n):
           for k in range(d):
-            res[i][j] += A[i][k]*B[k][j]
+            if A[i][k] and B[k][j]:
+              res[i][j] += A[i][k]*B[k][j]
       return res
       
