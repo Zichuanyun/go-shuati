@@ -1,0 +1,93 @@
+283. Move Zeroes
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int nums_len = nums.size();
+        int i = 0;
+        int z = 0;
+        int nz = 0;
+        while( z < nums_len && nz < nums_len) {
+            if(nums[z] != 0) {
+                z++;
+                nz = z;
+                continue;
+            }
+            if(nums[nz] == 0) {
+                nz++;
+                continue;
+            }
+            swap(nums[z], nums[nz]);
+        }
+    }
+};
+
+334. Increasing Triplet Subsequence
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int min = INT_MAX, max = INT_MAX;
+        for(int cur: nums) {
+            if(cur <= min) {
+                min = cur;
+            } else if (cur <= max) {
+                max = cur;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+这里不是找  min<=cur <=max
+是找min<=max <=cur
+
+
+
+49. Group Anagrams
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, multiset<string>> mp;
+        for(string s : strs) {
+            string t = s;
+            sort(t.begin(), t.end());
+            mp[t].insert(s);
+        }
+        vector<vector<string>> res;
+        for(auto m : mp) {
+            vector<string> tmpres(m.second.begin(), m.second.end());
+            res.push_back(tmpres);
+        }
+        return res;
+    }
+};
+
+311. Sparse Matrix Multiplication
+class Solution {
+public:
+    vector<vector<int>> multiply(vector<vector<int>>& A, vector<vector<int>>& B) {
+        int Asize = A.size();
+        int Bsize = B.size();
+        int Bwidth = B[0].size();
+        vector<vector<int>> res (Asize, vector<int>(Bwidth, 0));
+        
+        for (int i = 0; i < Asize; i++) {
+            
+            for (int k = 0; k < A[0].size(); k++) {
+                
+                if(A[i][k] == 0)
+                    continue;
+                
+                for (int j = 0; j < B[0].size(); j++) {
+                    res[i][j] += A[i][k] * B[k][j];
+                }
+            
+            }
+        }
+        return res;
+        
+    }
+};
