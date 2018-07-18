@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        if (nums.size() < 3) {
+            return false;
+        }
+        int left = 1;
+        while(nums[left] <= nums[left - 1] && left < nums.size()) {
+            left++;
+        }
+        if (left >= nums.size() - 1) return false;
+        int minimum = nums[left - 1], middle = nums[left], tmp_min = nums[left];
+        for (int i = left+1; i < nums.size(); i++) {
+            if (nums[i] > middle) return true;
+            if (nums[i] <= middle && nums[i] > minimum) {
+                middle = nums[i];
+                continue;
+            }
+            if (nums[i] <= middle && tmp_min <= minimum) {
+                middle = nums[i];
+                minimum = tmp_min;
+                continue;
+            }
+            if (nums[i] < minimum) {
+                tmp_min = min(nums[i], tmp_min);
+            }
+        }
+        return false;
+    }
+};
