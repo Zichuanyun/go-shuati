@@ -1,0 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    struct returnType {
+        bool valid;
+        int max;
+        int min;
+        returnType(bool v) {
+            valid = v;
+        }
+        returnType(bool v, int max_, int min_) {
+            valid = v;
+            max = max_;
+            min = min_;
+        }
+    };
+    returnType isValid(TreeNode* root) {
+        if (root == NULL) {
+            return returnType(true);
+        }
+        int min_ = root->val, max_ = root->val;
+        if (root->left != NULL) {
+            if (root->left->val >= root->val) {
+                return returnType(false);
+            }
+            returnType left = isValid(root->left);
+            // cout << "root: " << root->val << "; left: " << left.valid << ", " << left.max << ", " << left.min << "\n";
+            if (!left.valid || left.max >= root->val) {
+                return returnType(false);
+            } else {
+                min_ = min(left.min, min_);
+                max_ = max(left.max, max_);
+            }
+        }
+        if (root->right != NULL) {
+            if (root->right->val <= root->val) {
+                return returnType(false);
+            }
+            returnType right = isValid(root->right);
+            // cout << "root: " << root->val << "; right: " << right.valid << ", " << right.max << ", " << right.min << "\n";
+            if (!right.valid || right.min <= root->val) {
+                return returnType(false);
+            } else {
+                min_ = min(right.min, min_);
+                max_ = max(right.max, max_);
+            }
+        }
+        returnType result(true, max_, min_);
+        return result;
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        returnType result = isValid(root);
+        return result.valid;
+    }
+};

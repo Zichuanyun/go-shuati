@@ -1,0 +1,62 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+    int binarySearch(vector<Interval>& intervals, int num) {
+        int l = 0, r = intervals.size() - 1;
+        if (num <= intervals[l].start) return l;
+        if (num >= intervals[r].start) return r;
+        // assume intervals[l].start <= num, intervals[r].start > num
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (intervals[mid].start == num) {
+                return mid;
+            } if (intervals[mid].start < num) {
+                l = mid + 1;
+                if (intervals[l].start > num) {
+                    return mid;
+                }
+            } if (intervals[mid].start > num) {
+                r = mid - 1;
+                if (intervals[r].start < num) {
+                    return r;
+                }
+            }
+        }
+        return l;
+    }
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+        vector<Interval> result;
+        if (intervals.size() == 0) {
+            result.push_back(newInterval);
+            return result;
+        }
+        int start = binarySearch(intervals, newInterval.start);
+        int end = binarySearch(intervals, newInterval.end);
+        int new_start = min(intervals[start].start, newInterval.start);
+        int new_end = max(intervals[end].end, newInterval.end);
+        if (newInterval.end < intervals[end].start) {
+            end--;
+            new_end = newInterval.end;
+        }
+        if (newInterval.start > intervals[start].end){
+            start++;
+            new_start = newInterval.start;
+        } 
+        for (int i = 0; i < start; i++) {
+            result.push_back(intervals[i]);
+        }
+        result.push_back(Interval(new_start, new_end));
+        for(int i = end + 1; i < intervals.size(); i++) {
+            result.push_back(intervals[i]);
+        }
+        return result;
+    }
+};
