@@ -1,0 +1,113 @@
+90. Subsets II
+class Solution {
+public:
+    std::vector<std::vector<int> > subsetsWithDup(std::vector<int> &nums) {
+		std::sort(nums.begin(), nums.end());
+        std::vector<std::vector<int> > res;
+		std::vector<int> vec;
+		subsetsWithDup(res, nums, vec, 0);
+		return res;
+    }
+private:
+	void subsetsWithDup(std::vector<std::vector<int> > &res, std::vector<int> &nums, std::vector<int> &vec, int begin) {
+		res.push_back(vec);
+		for (int i = begin; i != nums.size(); ++i)
+			if (i == begin || nums[i] != nums[i - 1]) { 
+				vec.push_back(nums[i]);
+				subsetsWithDup(res, nums, vec, i + 1);
+				vec.pop_back();
+			}
+	}
+};
+
+325. Maximum Size Subarray Sum Equals k
+
+class Solution {
+public:
+    int maxSubArrayLen(vector<int>& nums, int k) {
+        
+        unordered_map<int, int> store;
+        int sum = 0;
+        int max_len = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+            if (sum == k) {
+                max_len = i + 1;
+            }
+            else if (store.find(sum - k) != store.end()) {
+                max_len = max(max_len, i - store[ sum - k ]);
+            }
+            if (store.find(sum) == store.end()) {
+                store[sum] = i;
+            }
+        }
+        return max_len;
+    }
+};
+
+102. Binary Tree Level Order Traversal
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        list<TreeNode*> store;
+        list<TreeNode*> next;
+        store.push_back(root);
+        vector<int> tmpv;
+        vector<vector<int>> res;
+        if(root == NULL)
+            return res;
+        while(!store.empty())
+        {
+            
+            TreeNode* tmp = store.front();
+            store.pop_front();
+            tmpv.push_back(tmp->val);
+            if(tmp->left != NULL)
+                next.push_back(tmp->left);
+            if(tmp->right != NULL)
+                next.push_back(tmp->right);
+            
+            if(store.empty())
+            {
+                store = next;
+                next.clear();
+                res.push_back(tmpv);
+                tmpv.clear();
+            }
+            
+        }
+        return res;
+    }
+};
+
+
+69. Sqrt(x)
+class Solution {
+public:
+    int mySqrt(int x) {
+        int left = 1, right = x, mid = 0;
+        
+        while( left <= right ) {
+            int mid = left+ (right - left) / 2;
+            if(mid > x/mid) {
+                right = mid - 1;
+            }
+            else {
+                if ((mid+1) > x / (mid+1)) {
+                    return mid;
+                }
+                left = mid+1;
+            }
+        }
+        return mid;
+    }
+};
