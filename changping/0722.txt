@@ -1,0 +1,82 @@
+
+56. Merge Intervals
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    
+    vector<Interval> merge(vector<Interval>& intervals) {
+        vector<Interval> res;
+        if(intervals.size() == 0) 
+            return res;
+        sort(intervals.begin(), intervals.end(), [](Interval a, Interval b){ return a.start < b.start;});
+        res.push_back(intervals[0]);
+        for(int i = 1; i < intervals.size(); i++) {
+            if(res.back().end < intervals[i].start) res.push_back(intervals[i]);
+            else
+                res.back().end = max(intervals[i].end, res.back().end);
+        }
+        return res;
+        
+    }
+};
+
+
+218. The Skyline Problem
+class Solution {
+public:
+   vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings) {
+       
+        pair<int,int> curr({0,0});
+        vector<pair<int,int>> result;
+        multiset<pair<int,int>> seq;
+        for(auto p:buildings){
+            seq.emplace(make_pair(p[0],-p[2]));
+            seq.emplace(make_pair(p[1],p[2]));
+        }
+        multiset<int> height({0});
+        for(auto p:seq){
+            if(p.second<0)height.emplace(-p.second);
+            else height.erase(height.find(p.second));
+            if(*height.rbegin()!=curr.second){
+                curr.first=p.first;
+                curr.second=*height.rbegin();
+                result.push_back(curr);
+            }
+        }
+        return result;
+    }
+};
+
+ 
+621. Task Scheduler
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> store;
+        store.resize(26);
+        int max_v = -1;
+        int max_count = 0;
+        
+        for (int i = 0; i < tasks.size(); i++) {
+            store[tasks[i]-'A'] ++;
+            if(store[tasks[i]-'A'] > max_v) {
+                max_v = store[tasks[i]-'A'];
+                max_count = 1;
+                
+            }
+            else if (store[tasks[i]-'A'] == max_v) {
+                max_count ++;
+            }     
+        }
+        int task_len = tasks.size();
+        return max((max_v-1)*(n+1) + max_count, task_len); 
+    }
+};
