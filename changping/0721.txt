@@ -1,0 +1,101 @@
+10. Regular Expression Matching
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        if(p.empty()) return s.empty();
+        
+        if('*' == p[1])
+            return (isMatch(s, p.substr(2)))  // "" "X*"
+            || ((!s.empty() && (s[0] == p[0] || '.'== p[0]) && isMatch(s.substr(1),p))); //"XX" "X*"
+        else
+            return !s.empty() && (s[0] == p[0] || '.' == p[0]) && isMatch(s.substr(1), p.substr(1));
+        
+        
+    }
+};
+
+297. Serialize and Deserialize Binary Tree
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        ostringstream out;
+        serialize(root, out);
+        return out.str();
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        istringstream in(data);
+        return deserialize(in);
+    }
+    
+private:
+    void serialize(TreeNode* root, ostringstream& out) {
+        if(root) {
+            out << root->val << ' ';
+            serialize(root->left, out);
+            serialize(root->right, out);
+        }
+        else {
+            out << "# ";
+        }
+    }
+    
+    TreeNode* deserialize(istringstream& in) {
+        string val;
+        in >> val;
+        if(val == "#")
+            return nullptr;
+        TreeNode* root = new TreeNode(stoi(val));
+        root->left = deserialize(in);
+        root->right = deserialize(in);
+        return root;
+    }
+    
+};
+
+
+75. Sort Colors
+
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec;
+// codec.deserialize(codec.serialize(root));
+
+
+class Solution {
+public:
+    void sortColors(vector<int> &A) {
+        int n = A.size();
+        int zero = 0;
+        int two = n - 1;
+        int i = 0;
+        while( i <= two) {
+            if(A[i] == 2) {
+                swap(A[i], A[two]);
+                two --;
+            }
+            else if (A[i] == 0) {
+                swap(A[i], A[zero]);
+                zero ++;
+                i++;
+            }
+            else {
+                i++;
+            }          
+            
+        }
+        
+    }
+};
