@@ -1,0 +1,15 @@
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        Collections.sort(intervals, (a, b) -> (a.start - b.start));
+        LinkedList<Interval> merged = new LinkedList<Interval>();
+        for (Interval interval : intervals) {
+            if (merged.isEmpty() || merged.getLast().end < interval.start) {
+                merged.add(interval);
+            }
+            else {
+                merged.getLast().end = Math.max(merged.getLast().end, interval.end);
+            }
+        }
+        return merged;
+    }
+}
