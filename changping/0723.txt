@@ -1,0 +1,107 @@
+285. Inorder Successor in BST
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        if(root == NULL)
+            return NULL;
+        if(p->val < root->val) {
+            TreeNode *tmp = inorderSuccessor(root->left, p);
+            return (tmp != NULL)? tmp:root;
+        }
+        else {
+            return inorderSuccessor(root->right, p);
+        }
+            
+    }
+};
+
+
+15. 3Sum
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        if(nums.size() < 3) {
+            return res;
+        }
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < nums.size() - 2; i++) {
+            if( i == 0 || nums[i] != nums[i-1]) {
+                int lo = i + 1, hi = nums.size() - 1, sum = 0 - nums[i];
+                while ( lo < hi ) {
+                    if(nums[lo] + nums[hi] == sum) {
+                        vector<int> tmp = {nums[i], nums[lo], nums[hi]};
+                        res.push_back(tmp);
+                        while( lo < hi && nums[lo] == nums[lo + 1]) lo++;
+                        while( lo < hi && nums[hi] == nums[hi - 1]) hi--;
+                        lo++;
+                        hi--;
+                    } else if(nums[lo] + nums[hi] < sum ) lo++;
+                    else hi--;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+从i开始，然后查询还差多少
+，然后用lo和hi相加求和。
+
+
+269. Alien Dictionary
+
+类似于topology sort
+
+class Solution {
+public:
+    string alienOrder(vector<string>& words) {
+        map<char, set<char>> suc, pre;
+        set<char> chars;
+        string s;
+        for(string t: words) {
+            chars.insert(t.begin(), t.end());
+            for(int i = 0; i < min(s.size(), t.size()); i++) {
+                char a = s[i], b = t[i];
+                if(a != b) {
+                    suc[a].insert(b);
+                    pre[b].insert(a);
+                    break;
+                }
+            }
+            s = t;
+        }
+
+	构建图，前后关系
+        
+        set<char> free = chars;
+        for(auto p : pre) {
+            free.erase(p.first);
+        }
+        找最初的点
+        string order;
+        while(free.size()) {
+            char a = *begin(free);
+            free.erase(a);
+            order += a;
+            for(char b : suc[a]) {
+                pre[b].erase(a);
+                if(pre[b].empty()) {
+                    free.insert(b);
+                }
+            }
+        }
+        return order.size() == chars.size() ? order:"";
+        
+    }
+};
