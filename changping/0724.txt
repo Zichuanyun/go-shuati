@@ -1,0 +1,122 @@
+146. LRU Cache
+
+// 这个题的关键是hash_map存list里面的iterator。这样删除时能保证O(1).
+
+class LRUCache {
+public:
+    LRUCache(int capacity): _capacity(capacity) {
+        
+    }
+    
+    int get(int key) {
+        auto it = cache.find(key);
+        if(it == cache.end()) return -1;
+        touch(it);
+        return it->second.first;
+    }
+    
+    void put(int key, int value) {
+        auto it = cache.find(key);
+        if(it == cache.end()) {
+            if(used.size() == _capacity) {
+                cache.erase(used.back());
+                used.pop_back();
+                  
+            }
+            used.push_front(key);
+        }   
+        else {
+            touch(it);
+        }
+        cache[key] = {value, used.begin()};
+        
+    }
+     
+private:
+    void touch(auto it) {
+        int key = it->first;
+        used.erase(it->second.second);
+        used.push_front(key);
+        it->second.second = used.begin();
+    }
+    list<int> used;
+    unordered_map<int, pair<int, list<int>::iterator>> cache;
+    int _capacity;
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+
+17. Letter Combinations of a Phone Number
+class Solution {
+public:
+    
+    vector<string> letterCombinations(string digits) {
+        vector<string> mapping = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        vector<string> res;
+        if(digits.length() == 0)
+            return res;
+        res.push_back("");
+        for(int i = 0; i < digits.length(); i++) {
+            int number = digits[i] - '0';
+            string tmp = mapping[number];
+            if(number < 0 || number > 9) continue;
+            if(tmp.length() == 0) continue;
+            vector<string> tmpres;
+            for(int j = 0; j < tmp.length(); j++) {
+                for(int k = 0; k < res.size(); k++) {
+                    tmpres.push_back(res[k] + tmp[j]);
+                }
+            }
+            res.swap(tmpres);
+            
+        }
+        return res;
+    }
+};
+
+
+
+377. Combination Sum IV
+
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+        if(target == 0) {
+            return 1;
+        }
+        int res = 0;
+        for(int i = 0; i < nums.size(); i++) {
+            if(target >= nums[i]) {
+                res += combinationSum4(nums, target - nums[i]);
+            }
+        }
+        return res;
+        
+    }
+};
+
+递归的版本超时，只能用dp方法
+
+
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+        
+        vector<int> comb(target + 1, 0);
+        comb[0] = 1;
+        for(int i = 1; i < comb.size(); i++) {
+            for(int j = 0; j < nums.size(); j++) {
+                if(i - nums[j] >= 0) {
+                    comb[i] += comb[i - nums[j]];
+                }
+            }
+        }
+        return comb[target];
+        
+    }
+};
