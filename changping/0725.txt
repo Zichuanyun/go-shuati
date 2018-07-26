@@ -1,0 +1,103 @@
+404. Sum of Left Leaves
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void solver(TreeNode* root, int& sum, bool addvalue) {
+        if(!root->left && !root->right) {
+            if(addvalue)
+                sum += root->val;
+            return;
+        }
+        if(root->left)
+            solver(root->left, sum, true);
+        if(root->right)
+            solver(root->right, sum, false);
+    }
+    
+    
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (!root)
+            return 0;
+        int res = 0;
+        solver(root, res, false);
+        return res;
+    }
+};
+
+
+
+253. Meeting Rooms II
+
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    int minMeetingRooms(vector<Interval>& intervals) {
+        map<int, int> store;
+        for(auto i : intervals) {
+            store[i.start] += 1;
+            store[i.end] -= 1;
+        }
+        int maxroom = 0, room = 0;
+        
+        for(auto s : store) {
+            maxroom = max(maxroom, room += s.second);
+        }
+        return maxroom;
+    }
+    
+
+};
+
+
+282. Expression Add Operators
+class Solution {
+public:
+    vector<string> addOperators(string num, int target) {
+        vector<string> res;
+        if(num.length() == 0) return res;
+        helper(res, "", num, target, 0, 0, 0);
+        return res;
+    }
+    
+    void helper(vector<string>& res, string path, string num, int target, int pos, long eval, long mul) {
+        if(pos == num.length()) {
+            if(target == eval) 
+                res.push_back(path);
+            return;
+        }
+        
+        for(int i = pos; i < num.length(); i++) {
+            if(i!=pos && num[pos] == '0') break;
+            long cur = stol(num.substr(pos, i - pos + 1));
+            if(pos == 0) {
+                helper(res, path + to_string(cur), num, target, i+1, cur, cur);
+            }
+            else {
+                helper(res, path + "+" + to_string(cur), num, target, i+1, eval + cur, cur);
+                
+                helper(res, path + "-" + to_string(cur), num, target, i+1, eval - cur, -cur);
+                
+                helper(res, path + "*" + to_string(cur), num, target, i+1, eval - mul + mul*cur, mul * cur);
+            }
+        }
+        
+    }
+    
+ 
+};
