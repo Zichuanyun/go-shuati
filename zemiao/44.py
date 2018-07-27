@@ -6,7 +6,8 @@ class Solution(object):
         :rtype: bool
         """
         # p[j]=='?' ==> dp[i][j] = dp[i-1][j-1]
-        # p[j]=='*' ==> dp[i][j] = dp[k][j-1], k=0...i
+        # p[j]=='*' ==> dp[i][j] = dp[k][j-1], k=0...i 
+        #   NOTE: dp[i-1][j] includes k=0...i-1
         m,n = len(s),len(p)
         dp = [[False for _ in range(n+1)] for _ in range(m+1)]
         dp[0][0] = True
@@ -22,10 +23,7 @@ class Solution(object):
             if p[j-1]=='?':
               dp[i][j] = dp[i-1][j-1]
             elif p[j-1]=='*':
-              for k in range(i+1):
-                if dp[k][j-1]:
-                  dp[i][j] = True
-                  break
+              dp[i][j] = dp[i][j-1] or dp[i-1][j-1] or dp[i-1][j]
             else:
               dp[i][j] = dp[i-1][j-1] and s[i-1] == p[j-1]
         return dp[m][n]
