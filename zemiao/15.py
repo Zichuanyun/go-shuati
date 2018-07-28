@@ -34,3 +34,52 @@ class Solution(object):
               r -= 1
             
         return res
+        
+# --------------- non sorting ---------------------        
+
+class Solution2(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        if not nums:
+          return res
+        
+        map = collections.defaultdict(int)
+        n = len(nums)
+        for x in nums:
+          map[x] += 1
+        
+        firstNum = set()
+        for i in range(n):
+          x = nums[i]
+          map[x] -= 1
+          if x in firstNum:
+            # Makes sure every 2sum is searching for different target, i.e. -x
+            continue
+          
+          visited = set()
+          for j in range(i+1,n):
+            y = nums[j]
+            if y in visited:
+              # Makes sure 2sum result contains no duplicated pairs.
+              continue
+              
+            if y in firstNum or -x-y in firstNum:
+              # Duplicated, because every triplet including previous firstNum was already explored.
+              continue
+              
+            if -x == y+y:
+              if map[y]>=2:
+                visited.add(y)
+                res.append([x,y,y])
+            elif map[-x-y] > 0:
+              visited.add(y)
+              visited.add(-x-y)
+              res.append([x,y,-x-y])
+          
+          firstNum.add(x)
+
+        return res
