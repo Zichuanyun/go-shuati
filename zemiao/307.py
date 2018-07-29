@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 class NumArray(object):
     # segment tree (stored in an array)
   
@@ -6,7 +8,7 @@ class NumArray(object):
         :type nums: List[int]
         """
         self.n = len(nums)
-        self.dp = collections.defaultdict(int)
+        self.dp = defaultdict(int)
         
         def construct(i,j):
           if i>j:
