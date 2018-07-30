@@ -1,0 +1,63 @@
+class Solution {
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        Map<String, Integer> emails = new HashMap<>();
+        int[] union = new int[accounts.size()];
+        for (int i = 0; i < accounts.size(); i++) {
+            List<String> ac = accounts.get(i);
+            int target = i;
+            union[i] = -1;
+            for (int j = 1; j < ac.size(); j++) {
+                String email = ac.get(j);
+                if (emails.containsKey(email)) {
+                    target = emails.get(email);
+                    while (union[target] != -1) {
+                        target = union[target];
+                    }
+                    if (union[i] == -1) {
+                        union[i] = target;
+                    } else if (union[i] < target) {
+                        union[target] = union[i];
+                        target = union[i];
+                    } else if (union[i] > target) {
+                        union[union[i]] = target;
+                        union[i] = target;
+                    }
+                }
+            }
+            for (int j = 1; j < ac.size(); j++) {
+                String email = ac.get(j);
+                if (!emails.containsKey(email)) {
+                    emails.put(email, target);
+                }
+            }
+        }
+            
+        for (int i = 0; i < union.length; i++) {
+            List<String> ac = accounts.get(i);
+            String name = ac.get(0);
+            ac.clear();
+            ac.add(name);
+        }
+        
+        for (String email : emails.keySet()) {
+            int i = emails.get(email);
+            while (union[i] != -1) {
+                i = union[i];
+            }
+            accounts.get(i).add(email);
+        }
+        
+        for (int i = union.length - 1; i >= 0; i--) {
+            if (union[i] != -1) {
+                accounts.remove(i);
+            }
+        }
+        
+        for (List<String> ac : accounts) {
+            String name = ac.remove(0);
+            Collections.sort(ac);
+            ac.add(0, name);
+        }
+        return accounts;
+    }
+}
