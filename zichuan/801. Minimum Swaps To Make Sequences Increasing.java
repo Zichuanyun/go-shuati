@@ -18,7 +18,6 @@ class Solution {
                 swap[i] = Math.min(swap[i], keep[i - 1] + 1);
                 keep[i] = Math.min(swap[i - 1], keep[i]);
             }
-            
         }
         return Math.min(keep[len - 1], swap[len - 1]);
     }
