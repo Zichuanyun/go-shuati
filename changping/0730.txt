@@ -1,0 +1,86 @@
+764. Largest Plus Sign
+class Solution {
+public:
+    int orderOfLargestPlusSign(int N, vector<vector<int>>& mines) {
+        
+        vector<vector<int>> grid(N, vector<int>(N, N));
+        
+        for(auto m: mines) {
+            grid[m[0]][m[1]] = 0;
+        }
+        
+        for (int i = 0; i < N; i++) {
+            int k = N - 1, l = 0, r = 0, u = 0, d = 0;
+            for (int j = 0; j < N; j++, k--) {
+                grid[i][j] = min(grid[i][j], l = (grid[i][j] == 0 ? 0 : l + 1));
+                grid[i][k] = min(grid[i][k], r = (grid[i][k] == 0 ? 0 : r+1));
+                grid[j][i] = min(grid[j][i], u = (grid[j][i] == 0 ? 0 : u+1));
+                grid[k][i] = min(grid[k][i], d = (grid[k][i] == 0 ? 0 : d+1));
+            }
+        }
+        
+        
+        int res = 0;
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                res = max(res, grid[i][j]);
+            }
+        }
+
+        return res;
+}
+};
+
+
+
+750. Number Of Corner Rectangles
+class Solution {
+public:
+    int countCornerRectangles(vector<vector<int>>& grid) {
+        int ans = 0;
+        for(int i = 0; i < grid.size() - 1; i++) {
+            for(int j = i + 1; j < grid.size(); j++) {
+                int counter = 0;
+                for(int k = 0; k < grid[0].size(); k++) {
+                    if(grid[i][k] == 1 && grid[j][k] == 1) counter++;
+                }
+                
+                if(counter > 0) ans += counter * (counter - 1) / 2;
+            }
+        }
+        return ans;
+    }
+};
+
+
+先确定两列。然后在两列里找同一个column为1的。然后C(counter, 2)
+
+ 
+801. Minimum Swaps To Make Sequences Increasing
+
+// swapReord 是swap A[i], B[i]。fixRecord是不换。
+
+class Solution {
+public:
+    int minSwap(vector<int>& A, vector<int>& B) {
+        int swapRecord = 1, fixRecord = 0;
+        for (int i = 1; i < A.size(); i++) {
+if (A[i-1] >= B[i] || B[i - 1] >= A[i]) {
+// swap
+                swapRecord ++;
+} else if (A[i-1] >= A[i] || B[i-1] >= B[i]) {
+// not swap
+                int tmp = swapRecord;
+                swapRecord = fixRecord + 1;
+                fixRecord = tmp;
+} else {
+// If either is ok. chose min one.
+                int minres = min(swapRecord, fixRecord);
+                swapRecord = minres + 1;
+                fixRecord = minres;
+            }
+        }
+        return min(swapRecord, fixRecord);
+    }
+};
