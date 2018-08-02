@@ -1,0 +1,52 @@
+363. Max Sum of Rectangle No Larger Than K
+
+class Solution {
+public:
+    int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
+        if(matrix.empty()) return 0;
+        int row = matrix.size(), col = matrix[0].size(), res = INT_MIN;
+        for (int l = 0; l < col; l++) {
+            vector<int> sums(row, 0);
+            for(int r = l; r < col; r++) {
+                for(int i = 0; i < row; i++) {
+                    sums[i] += matrix[i][r];
+                }
+            
+            
+                set<int> accSet;
+                accSet.insert(0);
+                int curSum = 0, curMax = INT_MIN;
+                for (int sum : sums) {
+                    curSum += sum;
+                    auto it = accSet.lower_bound(curSum - k);
+                    if (it != accSet.end()) curMax = max(curMax, curSum - *it);
+                    accSet.insert(curSum);
+                }
+                res = max(res, curMax);
+        }
+    }   
+    return res;
+}
+};
+
+
+55. Jump Game
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        int maxIndex = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(maxIndex>=i)
+            {
+                maxIndex = max(maxIndex,i+nums[i]);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
