@@ -1,0 +1,101 @@
+461. Hamming Distance
+
+class Solution {
+public:
+     int hammingDistance(int x, int y) {
+         int tmpx = x;
+         int tmpy = y;
+         int count = 0;
+         while(tmpx > 0 || tmpy > 0) {
+             if(tmpx%2 + tmpy%2 == 1) {
+                 count ++;
+             }
+             tmpx /= 2;
+             tmpy /= 2;
+         }
+         return count;
+         
+     }
+    
+};
+
+
+127. Word Ladder
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> wordDict;
+        for (auto s : wordList) {
+            wordDict.insert(s);
+        }
+        queue<string> toVisit;
+        addNextWords(beginWord, wordDict, toVisit);
+        int dist = 2;
+        while (!toVisit.empty()) {
+            int num = toVisit.size();
+            for(int i = 0; i < num; i++) {
+                string word = toVisit.front();
+                toVisit.pop();
+                if(word == endWord) return dist;
+                addNextWords(word, wordDict, toVisit);
+            }
+            dist++;
+        }
+        return 0;
+    }
+
+private:
+    void addNextWords(string word, unordered_set<string> &wordDict, queue<string>& toVisit) {
+        wordDict.erase(word);
+        for (int p = 0; p < (int) word.length(); p++) {
+            char letter = word[p];
+            for (int k = 0; k < 26; k++) {
+                word[p] = 'a' + k;
+                if(wordDict.find(word) != wordDict.end()) {
+                    toVisit.push(word);
+                    wordDict.erase(word);
+                }
+            }
+            word[p] = letter;
+        }
+    }
+    
+};
+
+
+
+ 
+773. Sliding Puzzle
+把vector换成string处理起来方便 1swap ，2 find
+class Solution {
+public:
+    int slidingPuzzle(vector<vector<int>>& board) {
+        string target = "123450";
+        string begin = to_string(board[0][0]) + to_string(board[0][1]) + to_string(board[0][2])
+            + to_string(board[1][0]) + to_string(board[1][1]) + to_string(board[1][2]);
+        // 0 为空的那块版可以动的index
+        vector<vector<int>> nextMoves{{1,3}, {0, 2, 4}, { 1, 5}, {0, 4}, { 1, 3, 5}, { 2, 4}};
+        unordered_set<string> visited{begin};
+        queue<string> q;
+        q.push(begin);
+        for(int depth = 0; ! q.empty(); depth++) {
+            int curSize = q.size(); // 不能用 i < q.size() 因为q在for里面会变
+            for (int i = 0; i < curSize; i++) {
+                auto cur = q.front(); 
+                q.pop();
+                if(cur == target) return depth;
+                int zeroPos = (int) cur.find("0");
+                for (auto move: nextMoves[zeroPos]) {
+                    auto cand = cur;
+                    swap(cand[zeroPos], cand[move]);
+                    if(visited.find(cand) == visited.end()) {
+                        visited.insert(cand);
+                        q.push(cand);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
