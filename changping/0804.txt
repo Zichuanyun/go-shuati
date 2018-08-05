@@ -1,0 +1,87 @@
+298. Binary Tree Longest Consecutive Sequence
+class Solution {
+public:
+    int longestConsecutive(TreeNode* root) {
+        return search(root, nullptr, 0);
+    }
+    
+    int search(TreeNode *root, TreeNode *parent, int len) {
+        if(!root) return len;
+        len = (parent && root->val == parent->val + 1) ? len + 1 : 1;
+        return max(len, max(search(root->left, root, len), search(root->right, root, len)));
+    }
+    
+};
+
+
+
+215. Kth Largest Element in an Array
+class Solution {
+public:
+    void swap(vector<int>& nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+    
+    int partation(vector<int>& a, int low, int high) {
+        int pivot = a[low];
+        int l = low + 1, r = high;
+        
+        while(l <= r) {
+            if(a[l] < pivot && a[r] > pivot) swap(a, l++, r--);
+            if(a[l] >= pivot) l++;
+            if(a[r] <= pivot) r--;
+        }
+        swap(a, low, r);
+        return r;
+    }
+    
+    int findKthLargest(vector<int>& nums, int k) {
+        int right = nums.size() - 1;
+        int left = 0;
+        while (true) {
+            int tmp = partation(nums, left, right);
+            if (tmp == k - 1) {
+                return nums[tmp];
+            }
+            else if (tmp > k - 1) {
+                right = tmp - 1;
+            }
+            else {
+                left = tmp + 1;
+            }
+        }
+    }
+
+};
+
+230. Kth Smallest Element in a BST
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        if(root == NULL) return 0;
+        stack<TreeNode*> mystack;
+        while(root != NULL || !mystack.empty()) {
+            while(root != NULL) {
+                mystack.push(root);
+                root = root->left;
+            }
+            root = mystack.top();
+            mystack.pop();
+            if (--k == 0) break;
+            root = root->right;
+        }
+        return root->val;
+    }
+    
+};
