@@ -1,0 +1,55 @@
+class Solution {
+public:
+    bool isValid(const string &s) {
+        int sum = 0;
+        for (const auto &c : s) {
+            if (c == '(') {
+                sum++;
+            }
+            if (c == ')') {
+                sum--;
+            }
+            if (sum < 0) {
+                return false;
+            }
+        }
+        return sum == 0;
+    }
+    vector<string> removeInvalidParentheses(string s) {
+        int sum1 = 0, sum2 = 0;
+        for (const auto &c : s) {
+            sum1 += (c == '(');
+            if (sum1 == 0) {
+                sum2 += (c == ')');
+            } else {
+                sum1 -= (c == ')');
+            }
+        }
+        vector<string> res;
+        dfs(&res, 0, s, sum1, sum2);
+        return res;
+    }
+    void dfs(vector<string> *res, int beg, string s, int sum1, int sum2) {
+        if (sum1 == 0 && sum2 == 0) {
+            if (isValid(s)) {
+                res->push_back(s);
+            }
+        } else {
+            for (int i = beg; i < s.size(); i++) {
+                string tmp = s;
+                if (sum2 == 0 && sum1 > 0 && tmp[i] == '(') {
+                    if(i == beg || tmp[i] != tmp[i - 1]) {
+                        tmp.erase(i, 1);
+                        dfs(res, i, tmp, sum1 - 1, sum2);
+                    }
+                }
+                if (sum2 > 0 && tmp[i] == ')') {
+                    if(i == beg || tmp[i] != tmp[i - 1]) {
+                        tmp.erase(i, 1);
+                        dfs(res, i, tmp, sum1, sum2 - 1);
+                    }
+                }
+            }
+        }
+    }
+};
