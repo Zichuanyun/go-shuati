@@ -1,0 +1,58 @@
+    unordered_map<RandomListNode*, RandomListNode*>mp;
+    RandomListNode *copyRandomList(RandomListNode *head) 
+    {
+        if(!head) return NULL;
+        if(mp[head]!=NULL) return mp[head];
+        mp[head] = new RandomListNode(head->label);
+        mp[head] -> next = copyRandomList(head->next);
+        mp[head] -> random = copyRandomList(head->random);
+        return mp[head];
+    }
+    
+    
+    /**
+ * Definition for singly-linked list with a random pointer.
+ * struct RandomListNode {
+ *     int label;
+ *     RandomListNode *next, *random;
+ *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    RandomListNode *copyRandomList(RandomListNode *head) {
+        if (head == NULL) {
+            return nullptr;
+        }
+        unordered_map<RandomListNode*, int> map;
+        RandomListNode *cur = head;
+        int idx = 0;
+        while (cur != NULL) {
+            cout << cur->label << " : " << cur->random << endl;
+            map[cur] = idx;
+            idx++;
+            cur = cur->next;
+        }
+        cout << endl << endl;
+        vector<RandomListNode*> tmp;
+        RandomListNode *anchor = new  RandomListNode(0);
+        cur = head;
+        RandomListNode *res = anchor;
+        while (cur!=NULL) {
+            res->next = new RandomListNode(cur->label);
+            tmp.push_back(res->next);
+            res = res->next;
+            cout << res->label << endl;
+            cur = cur->next;
+        }
+        cur = head;
+        idx = 0;
+        while (cur!=NULL) {
+            if(cur->random)
+                tmp[idx]->random = tmp[map[cur->random]];
+            idx++;
+            cur = cur->next;
+        }
+        return anchor->next;
+    }
+};

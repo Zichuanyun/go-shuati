@@ -1,0 +1,29 @@
+class Solution {
+    
+    int maxLen = Integer.MIN_VALUE;
+    int lo = Integer.MIN_VALUE;
+    public String longestPalindrome(String s) {
+        for(int i = 0; i < s.length(); i++) {
+            extendP(s, i, i+1);
+            extendP(s, i, i);
+        }
+        return s.substring(lo, lo + maxLen);
+    }
+    
+    public void extendP(String s, int l, int r) {
+        while(l >= 0 && r < s.length()) {
+            if(s.charAt(l) == s.charAt(r)) {
+                l--;
+                r++;
+            }
+            else
+                break;
+            //exceed, need to shrink
+        }
+        
+        if(maxLen < r - l + 1 - 2) {
+            maxLen = r - l + 1 - 2;
+            lo = l + 1; //exceed
+        }
+    }
+}
